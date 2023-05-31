@@ -19,7 +19,7 @@ import type {
 import type { Clients } from '../clients'
 
 type PossibleColors =
-  | 'Colors'
+  | Colors
   | BackgroundColors
   | HoverBackgroundColors
   | ActiveBackgroundColors
