@@ -34,28 +34,34 @@ type PossibleColors =
   | HoverOnColors
   | ActiveOnColors
 
-/**
- * Generates CSS variables from available styles and sets them as the response body.
- *
- * @param {ServiceContext<Clients>} context - The context object.
- * @returns {Promise<void>} - A Promise that resolves when the operation is complete.
- */
-const generateStyles = async (context: ServiceContext<Clients>) => {
+const objectHasProperty = (obj: unknown, prop: string) =>
+  Object.prototype.hasOwnProperty.call(obj, prop)
+
+const generateStyles = async (
+  context: ServiceContext<Clients>
+): Promise<void> => {
   const {
     clients: { stylesGraphql },
   } = context
 
-  const styles = (await stylesGraphql.getStyles()) ?? {}
+  let styles
+
+  try {
+    styles = (await stylesGraphql.getStyles()) ?? {}
+  } catch (error) {
+    console.error(error)
+    styles = {}
+  }
 
   const styleVars: string[] = []
 
   for (const key in styles) {
-    if (Object.prototype.hasOwnProperty.call(styles, key)) {
+    if (objectHasProperty(styles, key)) {
       const obj = styles[key as keyof Colors]
 
-      if (typeof obj === 'object' && obj !== null) {
+      if (typeof obj === 'object' && !!obj) {
         for (const prop in obj) {
-          if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+          if (objectHasProperty(obj, prop)) {
             const variableName = `--${key.replace(/_/g, '-')}-${prop.replace(
               /_/g,
               '-'
