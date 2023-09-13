@@ -15,17 +15,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - id: set_var
+      - name: Load manifest.json
+        id: set_var
         run: |
           content=`cat ./manifest.json`
           content="${content//'%'/'%25'}"
           content="${content//$'\n'/'%0A'}"
           content="${content//$'\r'/'%0D'}"
           echo "manifest=$content" >> "$GITHUB_OUTPUT"
+
+      - name: Get Vendor
         env:
           VENDOR: ${{fromJson(steps.set_var.outputs.manifest).vendor}}
-        run: |
-          echo "Vendor: $VENDOR"
+        run: echo "Vendor: $VENDOR"
 
       - name: Authenticate
         uses: vtex/action-toolbelt@v8
