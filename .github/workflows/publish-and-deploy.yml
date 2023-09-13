@@ -26,7 +26,7 @@ jobs:
 
       - name: Get Vendor
         env:
-          VENDOR: ${{fromJson(steps.set_var.outputs.manifest).vendor}}
+          VENDOR: ${{ fromJson(steps.set_var.outputs.manifest).vendor }}
         run: |
           echo "Vendor: $VENDOR"
 
