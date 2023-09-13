@@ -2,7 +2,7 @@
   "vendor": "ssesandbox04",
   "name": "global-style-vars",
   "description": "Provides CSS variables bound to the selected style",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "builders": {
     "node": "6.x",
     "pixel": "0.x",
