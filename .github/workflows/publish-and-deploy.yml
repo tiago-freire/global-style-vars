@@ -17,9 +17,9 @@ jobs:
 
       - name: Load manifest.json
       - run: |
-        echo 'MANIFEST_JSON<<EOF' >> $GITHUB_ENV
+        echo "MANIFEST_JSON<<EOF" >> $GITHUB_ENV
         cat ./manifest.json >> $GITHUB_ENV
-        echo 'EOF' >> $GITHUB_ENV
+        echo "EOF" >> $GITHUB_ENV
 
       - name: Authenticate
         uses: vtex/action-toolbelt@v8
