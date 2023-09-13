@@ -1,3 +1,5 @@
+[![Publish and Deploy App](https://github.com/tiago-freire/global-style-vars/actions/workflows/publish-and-deploy.yml/badge.svg)](https://github.com/tiago-freire/global-style-vars/actions/workflows/publish-and-deploy.yml)
+
 # Global Style Vars
 
 Provides CSS variables bound to the selected style.

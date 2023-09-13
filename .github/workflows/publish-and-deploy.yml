@@ -12,15 +12,25 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - id: set_var
+        run: |
+          content=`cat ./manifest.json`
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          echo "::set-output name=manifest::$content"
+      - run: |
+          echo "Vendor: ${{fromJson(steps.set_var.outputs.manifest).vendor}}"
+
       - name: Authenticate
         uses: vtex/action-toolbelt@v8
         with:
-          account: ssesandbox04
+          account: ${{fromJson(steps.set_var.outputs.manifest).vendor}}
           appKey: ${{ secrets.VTEX_TOOLBELT_KEY }}
           appToken: ${{ secrets.VTEX_TOOLBELT_TOKEN }}
-
-      - name: Checkout
-        uses: actions/checkout@v3
 
       - name: Publish App
         run: vtex publish --force
