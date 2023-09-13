@@ -20,7 +20,7 @@ jobs:
           echo "MANIFEST_JSON<<EOF" >> $GITHUB_ENV
           cat ./manifest.json >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
-          echo "VENDOR=${{ fromJson(env.MANIFEST_JSON).vendor }}"" >> $GITHUB_ENV
+          echo "VENDOR=${{ fromJson(env.MANIFEST_JSON).vendor }}" >> $GITHUB_ENV
           echo "App Vendor: $VENDOR"
 
       - name: Authenticate
