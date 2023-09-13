@@ -16,24 +16,15 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Load manifest.json
-        id: set_var
-        run: |
-          content=`cat ./manifest.json`
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
-          echo "manifest=$content" >> "$GITHUB_OUTPUT"
-
-      - name: Get Vendor
-        env:
-          VENDOR: "${{ fromJson(steps.set_var.outputs.manifest).vendor }}"
-        run: |
-          echo "Vendor: $VENDOR"
+      - run: |
+        echo 'MANIFEST_JSON<<EOF' >> $GITHUB_ENV
+        cat ./manifest.json >> $GITHUB_ENV
+        echo 'EOF' >> $GITHUB_ENV
 
       - name: Authenticate
         uses: vtex/action-toolbelt@v8
         with:
-          account: $VENDOR
+          account: ${{ fromJson(env.MANIFEST_JSON).vendor }}
           appKey: ${{ secrets.VTEX_TOOLBELT_KEY }}
           appToken: ${{ secrets.VTEX_TOOLBELT_TOKEN }}
 
