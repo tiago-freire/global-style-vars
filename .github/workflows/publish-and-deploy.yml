@@ -27,7 +27,8 @@ jobs:
       - name: Get Vendor
         env:
           VENDOR: ${{fromJson(steps.set_var.outputs.manifest).vendor}}
-        run: echo "Vendor: $VENDOR"
+        run: |
+          echo "Vendor: $VENDOR"
 
       - name: Authenticate
         uses: vtex/action-toolbelt@v8
