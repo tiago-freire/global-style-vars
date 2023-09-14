@@ -29,7 +29,23 @@ jobs:
           appToken: ${{ secrets.VTEX_TOOLBELT_TOKEN }}
 
       - name: Publish App
-        run: vtex publish
+        run: |
+          echo $'\n=============== Publish app '${{ fromJson(env.MANIFEST_JSON).name }}'\n'
+          output=$(vtex publish)
+          lastExitCode=$?
+          echo $output
+          if [[ lastExitCode -ne 0 || $output != *"published successfully"* ]]; then
+            echo $'\nFailed to publish app.'
+            exit 1
+          fi
 
       - name: Deploy App
-        run: vtex deploy --force
+        run: |
+          echo $'\n=============== Deploy app '${{ fromJson(env.MANIFEST_JSON).name }}'\n'
+          output=$(vtex deploy --force)
+          lastExitCode=$?
+          echo $output
+          if [[ lastExitCode -ne 0 || $output != *"Successfully deployed"* ]]; then
+            echo $'\nFailed to deploy app.'
+            exit 1
+          fi
