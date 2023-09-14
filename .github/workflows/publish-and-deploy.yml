@@ -21,19 +21,25 @@ jobs:
           cat ./manifest.json >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
+      - name: Load vendor, name and version
+        run: |
+          echo "APP_VENDOR=${{ fromJson(env.MANIFEST_JSON).vendor }}" >> $GITHUB_ENV
+          echo "APP_NAME=${{ fromJson(env.MANIFEST_JSON).name }}" >> $GITHUB_ENV
+          echo "APP_VERSION=${{ fromJson(env.MANIFEST_JSON).version }}" >> $GITHUB_ENV
+
       - name: Authenticate
         uses: vtex/action-toolbelt@v8
         with:
-          account: ${{ fromJson(env.MANIFEST_JSON).vendor }}
+          account: ${{ env.APP_VENDOR }}
           appKey: ${{ secrets.VTEX_TOOLBELT_KEY }}
           appToken: ${{ secrets.VTEX_TOOLBELT_TOKEN }}
 
       - name: Publish App
         run: |
-          echo $'\n=============== Publish app '${{ fromJson(env.MANIFEST_JSON).name }}'\n'
+          echo -e "\n=============== Publish app ${{ env.APP_VENDOR }}.${{ env.APP_NAME }}@${{ env.APP_VERSION }}\n"
           output=$(vtex publish)
           lastExitCode=$?
-          echo $output
+          echo "$output"
           if [[ lastExitCode -ne 0 || $output != *"published successfully"* ]]; then
             echo $'\nFailed to publish app.'
             exit 1
@@ -41,10 +47,10 @@ jobs:
 
       - name: Deploy App
         run: |
-          echo $'\n=============== Deploy app '${{ fromJson(env.MANIFEST_JSON).name }}'\n'
+          echo -e "\n=============== Deploy app ${{ env.APP_VENDOR }}.${{ env.APP_NAME }}@${{ env.APP_VERSION }}\n"
           output=$(vtex deploy --force)
           lastExitCode=$?
-          echo $output
+          echo "$output"
           if [[ lastExitCode -ne 0 || $output != *"Successfully deployed"* ]]; then
             echo $'\nFailed to deploy app.'
             exit 1
