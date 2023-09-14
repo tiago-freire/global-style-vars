@@ -46,7 +46,7 @@ jobs:
           lastExitCode=$?
           echo "$output"
           if [[ lastExitCode -ne 0 || $output != *"published successfully"* ]]; then
-            echo $'\nFailed to publish app.'
+            echo -e "\nFailed to publish app.""
             exit 1
           fi
 
@@ -57,6 +57,6 @@ jobs:
           lastExitCode=$?
           echo "$output"
           if [[ lastExitCode -ne 0 || $output != *"Successfully deployed"* ]]; then
-            echo $'\nFailed to deploy app.'
+            echo -e "\nFailed to deploy app."
             exit 1
           fi
