@@ -33,7 +33,7 @@ jobs:
           appToken: ${{ secrets.VTEX_TOOLBELT_TOKEN }}
 
       - name: Publish App
-        run: vtex publish --force
+        run: vtex publish
 
       - name: Deploy App
-        run: vtex deploy --force --yes
+        run: vtex deploy
