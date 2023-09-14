@@ -22,6 +22,7 @@ jobs:
           echo "EOF" >> $GITHUB_ENV
 
       - name: Get Vendor
+        run: echo "VENDOR: ${{ fromJson(env.MANIFEST_JSON).vendor }}"
         env:
           VENDOR: ${{ fromJson(env.MANIFEST_JSON).vendor }}
 
