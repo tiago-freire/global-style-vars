@@ -45,10 +45,9 @@ jobs:
           output=$(vtex publish)
           echo "$output"
           if [[ $output != *"published successfully"* ]]; then
-            echo -e "\nFailed to publish app.""
+            echo -e "\nFailed to publish app."
             exit 1
           fi
-          exit 0
 
       - name: Deploy App
         run: |
@@ -59,4 +58,3 @@ jobs:
             echo -e "\nFailed to deploy app."
             exit 1
           fi
-          exit 0
