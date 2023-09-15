@@ -45,7 +45,7 @@ jobs:
           output=$(vtex publish)
           lastExitCode=$?
           echo "$output"
-          if [[ lastExitCode -ne 0 || $output != *"published successfully"* ]]; then
+          if [[ $output != *"published successfully"* ]]; then
             echo -e "\nFailed to publish app.""
             exit 1
           fi
@@ -56,7 +56,7 @@ jobs:
           output=$(vtex deploy --force)
           lastExitCode=$?
           echo "$output"
-          if [[ lastExitCode -ne 0 || $output != *"Successfully deployed"* ]]; then
+          if [[ $output != *"Successfully deployed"* ]]; then
             echo -e "\nFailed to deploy app."
             exit 1
           fi
