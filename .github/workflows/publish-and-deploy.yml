@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: tiago-freire/vtex-publish-deploy-action@v1
+      - uses: tiago-freire/vtex-publish-deploy-action@main
 # jobs:
 #   deploy:
 #     name: Publish and Deploy App
